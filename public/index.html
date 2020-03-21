@@ -9,6 +9,25 @@
 
   <body>
     <p>Welcome to the chat-app</p>
+
+    <!-- allows to add connection between the back-end and the front-end -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      // A request from client to server to open the web socket and keep the connection open
+      // variable socket is used for communication purposes from client to server and vice-versa
+      var socket = io();
+
+      // first argument is the event-name and the next one will be callback function
+      socket.on('connect', () => {
+        console.log('Connected to server');
+      });
+
+      // disconnect is a build-in event so write spelling carefully
+      socket.on('disconnect', () => {
+        console.log('Disconnected from the server');
+      });
+    </script>
   </body>
-  
+
 </html>
