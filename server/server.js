@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
   });
 });
 
+// app.listen also calls for the same http.createServer();
 server.listen(port, () =>  {
   console.log(`Started on port ${port}`);
 });
