@@ -5,17 +5,7 @@ var socket = io();
 // first argument is the event-name and the next one will be callback function
 // function is used instead of arrow functions because of errors in other browsers
 socket.on('connect', function () {
-  console.log('Connected to server');
-
-  socket.emit('createMessage', {
-    from: 'User',
-    text: 'Hi there, server'
-  });
-
-  // socket.emit('createEmail', {
-  //   to: 'vyas@email.com',
-  //   text: 'Hello there'
-  // });
+  console.log('Connected to server');   
 });
 
 // disconnect is a build-in event so write spelling carefully
