@@ -24,6 +24,27 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New User connected');
 
+  // there can be 0 second argument but 2nd argument will send the data to the client
+  // socket.emit('newEmail', {
+  //   from: 'meet@email.com',
+  //   text: 'Hey. What is going on',
+  //   createAt: 123
+  // });
+
+  // socket.on('createEmail', (newEmail) => {
+  //   console.log('createEmail: ', newEmail);
+  // });
+
+  socket.emit('newMessage', {
+    from: 'Server',
+    text: 'Hi',
+    createdAt: 123123
+  });
+
+  socket.on('createMessage', (newMessage) => {
+    console.log('createMessage', newMessage);
+  });
+
   socket.on('disconnect', () => {
     console.log('User was disconnected');
   });
