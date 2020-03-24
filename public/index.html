@@ -10,6 +10,15 @@
   <body>
     <p>Welcome to the chat-app</p>
 
+    <ol id="messages"></ol>
+
+    <!-- id is stated becoz so that we can specially target this form code-->
+    <form id="message-form">
+      <input name="message" type="text" placeholder="Message"/>
+      <button>Send</button>
+    </form>
+
+    <script src="./js/libs/jquery-3.4.1.min.js"></script>
     <!-- allows to add connection between the back-end and the front-end -->
     <script src="/socket.io/socket.io.js"></script>
 

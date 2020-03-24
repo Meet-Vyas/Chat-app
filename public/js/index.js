@@ -5,7 +5,7 @@ var socket = io();
 // first argument is the event-name and the next one will be callback function
 // function is used instead of arrow functions because of errors in other browsers
 socket.on('connect', function () {
-  console.log('Connected to server');   
+  console.log('Connected to server');
 });
 
 // disconnect is a build-in event so write spelling carefully
@@ -15,6 +15,10 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (newMessage) {
   console.log('newMessage: ', newMessage);
+  var li = jQuery('<li></li>');
+  li.text(`${newMessage.from}: ${newMessage.text}`);
+
+  jQuery('#messages').append(li);
 });
 
 // front-end framework JQuery, React
@@ -22,3 +26,23 @@ socket.on('newMessage', function (newMessage) {
 // socket.on('newEmail', function (email) {
 //   console.log('New Email', email);
 // });
+
+// in socket.emit third function is the callback function
+// remember callbacks are required to be performed on both the server and the client side
+// socket.emit('createMessage', {
+//   from: 'Meet',
+//   text: 'Hi'
+// }, function(data) {
+//   console.log('Got it', data);
+// });
+
+jQuery('#message-form').on('submit', function(e) {
+  e.preventDefault();
+
+  socket.emit('createMessage', {
+    from: 'User',
+    text: jQuery('[name=message]').val()
+  }, function() {
+    console.log('Sent');
+  });
+});
