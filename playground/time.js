@@ -14,6 +14,10 @@ var moment = require('moment');
 // // comma not part of patterns that format expects so it will print like the same
 // console.log(date.format('Do MMM, YYYY'));
 
+var someTimestamp = moment().valueOf();
+console.log(someTimestamp); 
+
 // padding: 04, no padding: 4
-var date = moment();
+var createdAt = 1234;
+var date = moment(createdAt);
 console.log(date.format('h:mm:SS a'));
