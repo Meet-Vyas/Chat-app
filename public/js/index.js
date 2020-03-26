@@ -2,6 +2,24 @@
 // variable socket is used for communication purposes from client to server and vice-versa
 var socket = io();
 
+function scrollToBottom () {
+  // selectors
+  var messages = jQuery('#messages');
+  var newMessage = messages.children('li:last-child')
+  // heights
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  // console.log('Entered here but still');
+  if((clientHeight + scrollTop + newMessageHeight + lastMessageHeight) >= scrollHeight) {
+    console.log('scroll donw');
+    messages.scrollTop(scrollHeight);
+  }
+}
+
 // first argument is the event-name and the next one will be callback function
 // function is used instead of arrow functions because of errors in other browsers
 socket.on('connect', function () {
@@ -23,6 +41,7 @@ socket.on('newMessage', function (newMessage) {
   });
 
   jQuery('#messages').append(html);
+  scrollToBottom();
 });
 
 // front-end framework JQuery, React
@@ -50,6 +69,7 @@ socket.on('newLocationMessage', function(locationMessage) {
   });
 
   jQuery("#messages").append(html);
+  scrollToBottom();
 
   // var li = jQuery('<li></li>');
   // // target = _blank to open in a new tab
