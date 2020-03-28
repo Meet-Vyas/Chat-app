@@ -15,7 +15,6 @@ function scrollToBottom () {
 
   // console.log('Entered here but still');
   if((clientHeight + scrollTop + newMessageHeight + lastMessageHeight) >= scrollHeight) {
-    console.log('scroll donw');
     messages.scrollTop(scrollHeight);
   }
 }
@@ -23,12 +22,32 @@ function scrollToBottom () {
 // first argument is the event-name and the next one will be callback function
 // function is used instead of arrow functions because of errors in other browsers
 socket.on('connect', function () {
-  console.log('Connected to server');
+  var params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params, function (err) {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log('No error');
+    }
+  });
 });
 
 // disconnect is a build-in event so write spelling carefully
 socket.on('disconnect', function () {
   console.log('Disconnected from the server');
+});
+
+socket.on('updateUserList', function (users) {
+  var ol = jQuery('<ol></ol>');
+
+  users.forEach(function (user) {
+    ol.append(jQuery('<li></li>').text(user));
+  });
+
+  // not .append because we want to remove the list completely and reset rather than append
+  jQuery('#users').html(ol);
 });
 
 socket.on('newMessage', function (newMessage) {
@@ -88,7 +107,6 @@ jQuery('#message-form').on('submit', function(e) {
   var messageTextbox = jQuery('[name=message]');
 
   socket.emit('createMessage', {
-    from: 'User',
     text: messageTextbox.val()
   }, function() {
     messageTextbox.val('');
